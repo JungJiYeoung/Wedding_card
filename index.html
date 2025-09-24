@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>이성민 ♥ 정지영 결혼합니다</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- 기본 ---------- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html,body { height: 100%; }
+    body {
+      font-family: "Noto Sans KR", sans-serif;
+      background: #F6F6F6; /* 요청하신 배경색 */
+      color: #333;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 3;
+    }
+
+    /* ---------- 섹션 ---------- */
+    .section {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      position: relative;
+    }
+
+    /* ---------- 히어로(첫 화면) ---------- */
+    .hero {
+      padding: 0;
+      overflow: hidden;
+    }
+    .hero .photo {
+      width: 100%;
+      height: 100vh;
+      display: block;
+      
+      object-fit: contain; /* 사진이 잘리지 않고 전부 보이게 */
+      object-position: center;  /* 얼굴 잘리는 부분이 있으면 center 또는 center top 등으로 조절 */
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* 첫 화면 텍스트 (처음엔 섹션 위에 보이고 스크롤 중엔 fixed) */
+    .hero-overlay {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-60%, -60%);
+      z-index: 5;
+      text-align: center;
+      pointer-events: none;
+      transition: all 300ms ease;
+      width: min(900px, 92%);
+    }
+    /* fixed 된 상태: 뷰포트에 고정 (히어로가 보이는 동안 고정되어 보임) */
+    .hero-overlay.stuck {
+      position: fixed;
+      top: 43.5vh;              /* 고정 위치 (필요시 값 조정) */
+      transform: translateX(-50%);
+      left: 50%;
+    }
+
+    .hero-overlay .greeting {
+      font-size: 1.15rem;
+      font-weight: 300;
+      margin-bottom: 8px;
+      color: #fff;
+      text-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    }
+    .hero-overlay .names {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      line-height: 1.05;
+      color: #fff;
+      display: inline-block;
+      text-shadow: 0 10px 30px rgba(0,0,0,0.45);
+    }
+    .heart { color: #e07a5f; margin: 0 8px; }
+
+    /* ---------- 일반 섹션 내용 (스크롤 시 아래에서 올라오는 애니메이션) ---------- */
+    .content-wrap {
+      width: min(900px, 92%);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: transform 550ms cubic-bezier(.2,.9,.2,1), opacity 500ms ease;
+      will-change: transform, opacity;
+      margin: 18px 0;
+      color: #222;
+      font-weight: 400;
+      font-size: 1.05rem;
+    }
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* 여러 문장을 계단식으로 등장시키고 싶을 때 delay 유틸 */
+    .delay-0 { transition-delay: 0ms; }
+    .delay-1 { transition-delay: 120ms; }
+    .delay-2 { transition-delay: 240ms; }
+    .delay-3 { transition-delay: 360ms; }
+
+    /* 날짜/장소 강조 스타일 */
+    .date {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #111;
+    }
+    .location {
+      font-size: 1rem;
+      color: #555;
+    }
+
+    /* 사진 카드 스타일(나머지 섹션에 쓰는 이미지) */
+    .card-photo {
+      width: 100%;
+      max-height: 60vh;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.08);
+      display: block;
+      margin-bottom: 28px;
+    }
+
+    /* 반응형: hero overlay 크기 조절 */
+    @media (max-width: 600px) {
+      .hero-overlay { top: 45%; }
+      .hero-overlay.stuck { top: 12vh; }
+      .hero-overlay .greeting { font-size: 1rem; }
+      .hero-overlay .names { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== 1: 히어로 (사진 위에 고정되는 이름) ===== -->
+  <section class="section hero" id="hero">
+    <img class="photo" src="./photo1.jpg" alt="hero photo">
+    <div class="hero-overlay" id="heroOverlay">
+      <p class="greeting">저희 결혼합니다</p>
+      <h1 class="names">이성민 <span class="heart">♥</span> 정지영</h1>
+    </div>
+  </section>
+
+  <!-- ===== 2: 날짜 섹션 (스크롤할 때마다 아래에서 올라옴) ===== -->
+  <section class="section">
+    <div class="content-wrap">
+      <p class="reveal delay-0 date">2026년 10월 25일 토요일 오후 1시</p>
+      <p class="reveal delay-1 location">그랜드 컨벤션 센터, 그랜드볼룸</p>
+    </div>
+  </section>
+
+  <!-- ===== 3: 초대 문구 (한 줄씩 올라옴) ===== -->
+  <section class="section">
+    <div class="content-wrap">
+      <p class="reveal delay-0">소중한 분들을 모시고</p>
+      <p class="reveal delay-1">저희의 새로운 시작을 함께 하려 합니다.</p>
+      <p class="reveal delay-2">따뜻한 축복으로 함께해 주세요.</p>
+    </div>
+  </section>
+
+  <!-- ===== 4: 사진 + 추가 문구 ===== -->
+<!-- ===== 4: 사진 갤러리 ===== -->
+<section class="section">
+  <div class="content-wrap">
+    <div class="gallery">
+      <img src="./photo2.jpg" alt="photo1" class="gallery-item">
+      <img src="./photo3.jpg" alt="photo2" class="gallery-item">
+      <img src="./photo4.jpg" alt="photo3" class="gallery-item">
+      <img src="./photo5.jpg" alt="photo4" class="gallery-item">
+      <img src="./photo6.jpg" alt="photo5" class="gallery-item">
+      <img src="./photo7.jpg" alt="photo6" class="gallery-item">
+      <img src="./photo8.jpg" alt="photo7" class="gallery-item">
+      <img src="./photo9.jpg" alt="photo8" class="gallery-item">
+      <img src="./photo10.jpg" alt="photo9" class="gallery-item">
+    </div>
+  </div>
+</section>
+
+
+<!-- 갤러리 모달 -->
+<div class="modal" id="modal">
+  <span class="close">&times;</span>
+  <img class="modal-img" id="modal-img">
+  <span class="prev">&#10094;</span>
+  <span class="next">&#10095;</span>
+</div>
+
+
+<!-- 카운트다운 -->
+<div id="countdown"></div>
+
+<style>
+  #countdown {
+    display: block;
+    text-align: center;  /* 가운데 정렬 */
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px; /* 아래 여백 */
+  }
+</style>
+
+<script>
+  const weddingDate = new Date("2026-10-25 13:00:00").getTime();
+  setInterval(() => {
+    const now = new Date().getTime();
+    const diff = weddingDate - now;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    document.getElementById("countdown").innerText =
+      `♥D-${days} (${hours}시간 ${minutes}분 남음)♥`;
+  }, 1000);
+</script>
+
+
+</script>
+<section class="section">
+<div class="content-wrap"> 
+<p class="reveal delay-0">오시는 길은 홈페이지에서 확인하실 수 있습니다.</p> 
+<p class="reveal delay-1">문의: 010-1234-5678</p> </div> </section
+
+<!-- JS,css 연결 -->
+<script src="script.js"></script>
+<link rel="stylesheet" href="style.css">
+
+  <script>
+    // ===== Hero overlay: 히어로 영역이 보이는 동안 텍스트를 fixed(고정) 시키고,
+    // 히어로가 벗어나면 fixed 해제하여 자연스럽게 올라가게 함 =====
+    (function () {
+      const hero = document.getElementById('hero');
+      const overlay = document.getElementById('heroOverlay');
+
+      const heroObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          // entry.intersectionRatio가 충분히 크면 hero가 보이는 상태
+          if (entry.intersectionRatio > 0.35) {
+            overlay.classList.add('stuck'); // 화면에 고정
+          } else {
+            overlay.classList.remove('stuck'); // 고정 해제 -> 섹션과 함께 스크롤됨
+          }
+        });
+      }, {
+        threshold: [0, 0.15, 0.35, 0.6, 1]
+      });
+
+      heroObserver.observe(hero);
+    })();
+
+    // ===== 각 .reveal 요소가 화면에 들어올 때 class 추가하여 아래->위 등장 애니메이션 실행 =====
+    (function () {
+      const revealEls = document.querySelectorAll('.reveal');
+
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            // 한 번 보이면 유지 (재진입 시 다시 애니메이션 원하면 아래 줄 주석 해제)
+            // revealObserver.unobserve(entry.target);
+          } else {
+            // 화면에서 벗어났을 때 다시 숨기고 싶으면 아래 주석 해제
+            // entry.target.classList.remove('in-view');
+          }
+        });
+      }, {
+        root: null,
+        rootMargin: '0px 0px -10% 0px', // 약간 화면 하단에 닿기 전에 트리거
+        threshold: 0.12
+      });
+
+      revealEls.forEach(el => revealObserver.observe(el));
+    })();
+
+    // ===== 팁: 이미지가 얼굴 기준으로 잘려서 보이는 경우 조절 안내 =====
+    // object-position을 바꿔서 얼굴 위치를 조정하세요. 예: document.querySelector('.photo').style.objectPosition = 'center top';
+  </script>
+</body>
+</html>
