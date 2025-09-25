@@ -219,35 +219,24 @@
   }
 </style>
 
-
 <script>
-function updateCountdown() {
-  // 결혼식 날짜를 한국 시간 기준으로 생성
-  const weddingDate = new Date(Date.UTC(2025, 11, 27, 4, 0, 0)); 
-  // UTC 04:00 = KST 13:00 (UTC+9)
+  const weddingDate = new Date("2025-12-27 13:00:00").getTime();
 
-  const now = new Date();
-  const diff = weddingDate - now;
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const diff = weddingDate - now;
 
-  if (diff < 0) {
-    document.getElementById("countdown").innerText = "♥결혼식이 시작되었습니다!♥";
-    return;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+    document.getElementById("countdown").innerText =
+      `♥ D-${days} ♥`;
   }
 
-  const totalHours = Math.floor(diff / (1000 * 60 * 60)); 
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)); 
-
-  document.getElementById("countdown").innerText =
-    `♥D-${totalHours}시간 ${minutes}분 남음♥`;
-}
-
-setInterval(updateCountdown, 1000);
-updateCountdown();
+  updateCountdown(); // 바로 실행
+  setInterval(updateCountdown, 1000); // 1초마다 갱신
 </script>
-
-
-
-
 
 
 
@@ -276,9 +265,16 @@ updateCountdown();
 
 </script>
 <section class="section">
-<div class="content-wrap"> 
-<p class="reveal delay-0">오시는 길은 홈페이지에서 확인하실 수 있습니다.</p> 
-<p class="reveal delay-1">문의: 010-2836-5348</p> </div> </section
+  <div class="content-wrap"> 
+    <p class="reveal delay-0">오시는 길은 홈페이지에서 확인하실 수 있습니다.</p> 
+    <p class="reveal delay-1">
+      <a href="http://www.grandhouse.kr/" target="_blank" style="color:#0066cc; text-decoration:underline;">
+        ▶ 오시는 길 바로가기
+      </a>
+    </p>
+    <p class="reveal delay-2">문의: 010-2836-5348</p> 
+  </div> 
+</section>
 
 <!-- JS,css 연결 -->
 <script src="script.js"></script>
