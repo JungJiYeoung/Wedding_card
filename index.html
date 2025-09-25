@@ -219,18 +219,59 @@
   }
 </style>
 
+
 <script>
-  const weddingDate = new Date("2025-12-27 13:00:00").getTime();
-  setInterval(() => {
-    const now = new Date().getTime();
-    const diff = weddingDate - now;
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    document.getElementById("countdown").innerText =
-      `♥D-${days} (${hours}시간 ${minutes}분 남음)♥`;
-  }, 1000);
+function updateCountdown() {
+  // 결혼식 날짜를 한국 시간 기준으로 생성
+  const weddingDate = new Date(Date.UTC(2025, 11, 27, 4, 0, 0)); 
+  // UTC 04:00 = KST 13:00 (UTC+9)
+
+  const now = new Date();
+  const diff = weddingDate - now;
+
+  if (diff < 0) {
+    document.getElementById("countdown").innerText = "♥결혼식이 시작되었습니다!♥";
+    return;
+  }
+
+  const totalHours = Math.floor(diff / (1000 * 60 * 60)); 
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)); 
+
+  document.getElementById("countdown").innerText =
+    `♥D-${totalHours}시간 ${minutes}분 남음♥`;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
 </script>
+
+
+
+
+
+
+
+<section class="section" id="account-section">
+  <div class="account-box">
+    <h2>💳 마음 전하실 곳</h2>
+
+    <!-- 신랑 계좌 -->
+    <div class="account-item">
+      <span class="account-label">신랑:</span>
+      <span class="account-number" id="groom-account">신한은행 110352286013 (이성민)</span>
+      <button onclick="copyAccount('groom-account')">복사</button>
+    </div>
+
+    <!-- 신부 계좌 -->
+    <div class="account-item">
+      <span class="account-label">신부:</span>
+      <span class="account-number" id="bride-account">농협은행 3021695120041 (정지영)</span>
+      <button onclick="copyAccount('bride-account')">복사</button>
+    </div>
+  </div>
+</section>
+
+
 
 
 </script>

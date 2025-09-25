@@ -18,6 +18,12 @@ toggleBtn.addEventListener("click", () => {
   isPlaying = !isPlaying;
 });
 
+function copyAccount(id) {
+  const text = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text)
+    .then(() => alert("계좌번호가 복사되었습니다!"))
+    .catch(() => alert("복사 실패. 수동으로 복사해주세요."));
+}
 
 const galleryItems = document.querySelectorAll(".gallery-item");
 let currentIndex = 0;

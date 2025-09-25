@@ -67,6 +67,47 @@ body {
   margin: 0;
   font-family: sans-serif;
 }
+.account-box {
+  text-align: center;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 450px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background: #f9f9f9;
+}
+
+.account-item {
+  display: flex;
+  flex-wrap: wrap; /* 모바일에서 줄바꿈 가능 */
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  gap: 8px; /* 각 요소 사이 간격 */
+}
+
+.account-label {
+  font-weight: bold;
+}
+
+.account-number {
+  white-space: nowrap; /* 계좌번호 줄바꿈 방지 */
+  overflow-x: auto;   /* 길면 스크롤 */
+}
+
+.account-item button {
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: none;
+  background-color: #f48fb1;
+  color: #fff;
+}
+
 
 #bgm-toggle {
   position: fixed;
