@@ -3,6 +3,20 @@ const modalImg = document.getElementById("modal-img"); // HTML과 동일하게 �
 const closeBtn = document.querySelector(".close");
 const prevBtn = document.querySelector(".prev");
 const nextBtn = document.querySelector(".next");
+const bgm = document.getElementById("bgm");
+const toggleBtn = document.getElementById("bgm-toggle");
+let isPlaying = false;
+
+toggleBtn.addEventListener("click", () => {
+  if (isPlaying) {
+    bgm.pause();
+    toggleBtn.textContent = "🔇 음악 꺼짐";
+  } else {
+    bgm.play();
+    toggleBtn.textContent = "🔊 음악 켜짐";
+  }
+  isPlaying = !isPlaying;
+});
 
 
 const galleryItems = document.querySelectorAll(".gallery-item");
